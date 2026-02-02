@@ -1,0 +1,30 @@
+.footer {
+    background: #0a0a0a;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 3rem 0;
+    color: var(--muted);
+    text-align: center;
+    margin-top: auto;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.socials {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.socialLink {
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.socialLink:hover {
+    color: var(--accent);
+}
