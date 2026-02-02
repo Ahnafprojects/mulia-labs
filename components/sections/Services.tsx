@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Code, Layout, ShoppingBag, Database, ArrowRight, X, Monitor, Store } from "lucide-react";
+import { Code, Layout, ShoppingBag, ArrowRight, X, Monitor, Store } from "lucide-react";
 import { useState } from "react";
 
 const services = [
@@ -47,14 +47,14 @@ export function Services() {
     const [selectedService, setSelectedService] = useState<number | null>(null);
 
     return (
-        <section id="services" className="section relative">
+        <section id="services" className="section relative bg-gray-50/50">
             <div className="container-custom">
                 <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-                    <h2 className="text-neon-purple font-bold tracking-wider uppercase text-sm">Our Services</h2>
-                    <h3 className="text-4xl md:text-5xl font-display font-bold">
-                        Solutions for Every <span className="text-gradient">Stage.</span>
+                    <h2 className="text-black font-bold tracking-wider uppercase text-sm">Our Services</h2>
+                    <h3 className="text-4xl md:text-5xl font-display font-bold text-gray-900">
+                        Solutions for Every <span className="text-gray-400">Stage.</span>
                     </h3>
-                    <p className="text-white/60">
+                    <p className="text-gray-500">
                         From simple landing pages to complex business systems, we build web solutions that drive growth.
                     </p>
                 </div>
@@ -67,21 +67,19 @@ export function Services() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
-                            className="group relative p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] transition-colors duration-300 flex flex-col h-full"
+                            className="group relative p-8 rounded-2xl bg-white border border-gray-100 hover:shadow-xl hover:shadow-black/5 transition-all duration-300 flex flex-col h-full hover:-translate-y-1"
                         >
-                            <div className="absolute inset-0 bg-gradient-to-br from-neon-cyan/5 to-neon-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
-
                             <div className="relative z-10 flex flex-col h-full">
-                                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-white/5 group-hover:border-neon-cyan/30">
-                                    <service.icon className="w-7 h-7 text-white group-hover:text-neon-cyan transition-colors" />
+                                <div className="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-gray-100">
+                                    <service.icon className="w-7 h-7 text-black group-hover:text-gray-700 transition-colors" />
                                 </div>
 
-                                <h4 className="text-xl font-bold font-display mb-3 group-hover:text-neon-cyan transition-colors">{service.title}</h4>
-                                <p className="text-white/60 text-sm leading-relaxed mb-6 flex-grow">{service.description}</p>
+                                <h4 className="text-xl font-bold font-display mb-3 text-gray-900">{service.title}</h4>
+                                <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">{service.description}</p>
 
                                 <button
                                     onClick={() => setSelectedService(index)}
-                                    className="mt-auto flex items-center gap-2 text-neon-cyan text-sm font-medium opacity-80 group-hover:opacity-100 hover:gap-3 transition-all duration-300 cursor-pointer"
+                                    className="mt-auto flex items-center gap-2 text-black text-sm font-bold opacity-70 group-hover:opacity-100 hover:gap-3 transition-all duration-300 cursor-pointer"
                                 >
                                     <span>Learn more</span>
                                     <ArrowRight size={14} />
@@ -98,42 +96,42 @@ export function Services() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+                            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm"
                             onClick={() => setSelectedService(null)}
                         >
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                                initial={{ opacity: 0, scale: 0.95, y: 20 }}
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                                exit={{ opacity: 0, scale: 0.95, y: 20 }}
                                 transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                                className="relative w-full max-w-lg bg-[#0a0f1c] border border-white/10 rounded-2xl p-8 shadow-2xl glass-card"
+                                className="relative w-full max-w-lg bg-white border border-gray-100 rounded-2xl p-8 shadow-2xl"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 <button
                                     onClick={() => setSelectedService(null)}
-                                    className="absolute top-4 right-4 p-2 text-white/50 hover:text-white transition-colors bg-white/5 hover:bg-white/10 rounded-full cursor-pointer"
+                                    className="absolute top-4 right-4 p-2 text-gray-400 hover:text-black transition-colors bg-gray-50 hover:bg-gray-100 rounded-full cursor-pointer"
                                 >
                                     <X size={20} />
                                 </button>
 
-                                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center mb-6 border border-white/10">
+                                <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mb-6 border border-gray-100">
                                     {(() => {
                                         const Icon = services[selectedService].icon;
-                                        return <Icon className="w-8 h-8 text-neon-cyan" />;
+                                        return <Icon className="w-8 h-8 text-black" />;
                                     })()}
                                 </div>
 
-                                <h3 className="text-2xl font-bold font-display mb-4 text-white">
+                                <h3 className="text-2xl font-bold font-display mb-4 text-gray-900">
                                     {services[selectedService].title}
                                 </h3>
 
-                                <p className="text-white/70 leading-relaxed mb-6">
+                                <p className="text-gray-600 leading-relaxed mb-6">
                                     {services[selectedService].details}
                                 </p>
 
                                 <button
                                     onClick={() => setSelectedService(null)}
-                                    className="w-full py-3 rounded-lg bg-gradient-to-r from-neon-cyan/20 to-neon-purple/20 border border-white/10 text-white font-medium hover:from-neon-cyan/30 hover:to-neon-purple/30 transition-all cursor-pointer"
+                                    className="w-full py-3 rounded-lg bg-black text-white font-medium hover:bg-gray-800 transition-all cursor-pointer shadow-lg shadow-gray-200"
                                 >
                                     Close
                                 </button>

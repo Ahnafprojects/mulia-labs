@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 export function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -18,6 +18,15 @@ export function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // Lock body scroll when menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
+        }
+    }, [isMobileMenuOpen]);
+
     const navLinks = [
         { name: "About", href: "#about" },
         { name: "Services", href: "#services" },
@@ -25,18 +34,34 @@ export function Navbar() {
         { name: "Process", href: "#process" },
     ];
 
+    const menuVariants = {
+        closed: {
+            opacity: 0,
+            transition: {
+                duration: 0.5
+            }
+        },
+        open: {
+            opacity: 1,
+            y: "0%",
+            transition: {
+                duration: 0.5
+            }
+        }
+    };
+
     return (
         <motion.header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "py-4 glass border-b border-white/5" : "py-6 bg-transparent"
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "py-4 glass" : "py-6 bg-transparent"
                 }`}
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
         >
             <div className="container-custom flex items-center justify-between">
-                <Link href="/" className="text-2xl font-bold font-display tracking-tight z-50 relative group">
-                    Mulia<span className="text-primary">Labs</span>
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-neon-cyan to-neon-purple transition-all duration-300 group-hover:w-full"></span>
+                {/* Logo */}
+                <Link href="/" className="text-2xl font-bold font-display tracking-tight z-50 relative group text-foreground">
+                    Mulia<span className="text-secondary">Labs</span>
                 </Link>
 
                 {/* Desktop Nav */}
@@ -45,47 +70,60 @@ export function Navbar() {
                         <Link
                             key={link.name}
                             href={link.href}
-                            className="text-sm font-medium text-white/80 hover:text-white transition-colors relative hover:after:w-full hover:after:bg-primary after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-transparent after:transition-all after:duration-300"
+                            className="text-sm font-medium text-gray-500 hover:text-black transition-colors"
                         >
                             {link.name}
                         </Link>
                     ))}
-                    <Button variant="glow" size="sm" asChild>
-                        <Link href="#contact">Let's Talk</Link>
+                    <Button variant="outline" size="sm" asChild className="ml-4 border-gray-200 hover:bg-gray-50 text-black">
+                        <a href="https://wa.me/6281252961135" target="_blank" rel="noopener noreferrer">Let's Talk</a>
                     </Button>
                 </nav>
 
-                {/* Mobile Toggle */}
+                {/* Mobile Toggle Button */}
                 <button
-                    className="md:hidden z-50 text-white"
+                    className="md:hidden z-50 flex flex-col items-center justify-center gap-1.5 focus:outline-none w-10 h-10"
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 >
-                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    <motion.span
+                        animate={isMobileMenuOpen ? { rotate: 45, y: 8, backgroundColor: "#000" } : { rotate: 0, y: 0, backgroundColor: "#000" }}
+                        className="w-6 h-0.5 bg-black block transition-all"
+                    ></motion.span>
+                    <motion.span
+                        animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1, backgroundColor: "#000" }}
+                        className="w-6 h-0.5 bg-black block transition-all"
+                    ></motion.span>
+                    <motion.span
+                        animate={isMobileMenuOpen ? { rotate: -45, y: -8, backgroundColor: "#000" } : { rotate: 0, y: 0, backgroundColor: "#000" }}
+                        className="w-6 h-0.5 bg-black block transition-all"
+                    ></motion.span>
                 </button>
 
-                {/* Mobile Nav Overlay */}
+                {/* Mobile Menu Overlay */}
                 <AnimatePresence>
                     {isMobileMenuOpen && (
                         <motion.div
-                            initial={{ opacity: 0, x: "100%" }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: "100%" }}
-                            transition={{ ease: "easeInOut", duration: 0.4 }}
-                            className="fixed inset-0 bg-background/95 backdrop-blur-2xl z-40 flex flex-col items-center justify-center gap-8 md:hidden"
+                            initial="closed"
+                            animate="open"
+                            exit="closed"
+                            variants={menuVariants}
+                            className="fixed inset-0 bg-white z-40 flex flex-col md:hidden pt-24 px-6"
                         >
-                            <div className="flex flex-col items-center gap-6">
+                            <div className="flex flex-col gap-6">
                                 {navLinks.map((link) => (
                                     <Link
                                         key={link.name}
                                         href={link.href}
                                         onClick={() => setIsMobileMenuOpen(false)}
-                                        className="text-2xl font-display font-medium text-white hover:text-primary transition-colors"
+                                        className="text-3xl font-display font-medium text-black hover:text-gray-500 transition-colors border-b border-gray-100 pb-4"
                                     >
                                         {link.name}
                                     </Link>
                                 ))}
-                                <Button variant="glow" size="lg" className="mt-4" onClick={() => setIsMobileMenuOpen(false)} asChild>
-                                    <Link href="#contact">Start Project</Link>
+                                <Button variant="default" size="lg" className="mt-4 w-full bg-black text-white hover:bg-gray-800" onClick={() => setIsMobileMenuOpen(false)} asChild>
+                                    <Link href="#contact">
+                                        Start Project <ArrowRight className="ml-2 w-5 h-5" />
+                                    </Link>
                                 </Button>
                             </div>
                         </motion.div>
