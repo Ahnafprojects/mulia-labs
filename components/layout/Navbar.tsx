@@ -107,7 +107,7 @@ export function Navbar() {
                             animate="open"
                             exit="closed"
                             variants={menuVariants}
-                            className="fixed inset-0 bg-white z-40 flex flex-col md:hidden pt-24 px-6"
+                            className="fixed inset-0 bg-gray-900/95 z-40 flex flex-col md:hidden pt-24 px-6"
                         >
                             <div className="flex flex-col gap-6">
                                 {navLinks.map((link) => (
@@ -115,12 +115,12 @@ export function Navbar() {
                                         key={link.name}
                                         href={link.href}
                                         onClick={() => setIsMobileMenuOpen(false)}
-                                        className="text-3xl font-display font-medium text-black hover:text-gray-500 transition-colors border-b border-gray-100 pb-4"
+                                        className="text-3xl font-display font-medium text-white hover:text-gray-300 transition-colors border-b border-gray-800 pb-4"
                                     >
                                         {link.name}
                                     </Link>
                                 ))}
-                                <Button variant="default" size="lg" className="mt-4 w-full bg-black text-white hover:bg-gray-800" onClick={() => setIsMobileMenuOpen(false)} asChild>
+                                <Button variant="default" size="lg" className="mt-4 w-full bg-white text-black hover:bg-gray-200" onClick={() => setIsMobileMenuOpen(false)} asChild>
                                     <Link href="#contact">
                                         Start Project <ArrowRight className="ml-2 w-5 h-5" />
                                     </Link>
